@@ -989,6 +989,8 @@ Resources:
       Parameters:
         DatabaseClusterEndpointAddress:
           !GetAtt [ rds, Outputs.DatabaseClusterEndpointAddress ]
+        DatabaseReadEndpointAddress:
+          !GetAtt [ rds, Outputs.DatabaseReadEndpointAddress ]
         DatabaseMasterUsername:
           !Ref DatabaseMasterUsername
         DatabaseMasterPassword:
@@ -1032,6 +1034,8 @@ Resources:
       Parameters:
         DatabaseClusterEndpointAddress:
           !GetAtt [ rds, Outputs.DatabaseClusterEndpointAddress ]
+        DatabaseReadEndpointAddress:
+          !GetAtt [ rds, Outputs.DatabaseReadEndpointAddress ]
         DatabaseMasterUsername:
           !Ref DatabaseMasterUsername
         DatabaseMasterPassword:

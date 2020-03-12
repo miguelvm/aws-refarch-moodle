@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
-Description: Reference Architecture to host Moodle on AWS - Creates RDS Aurora PostgreSQL database cluster
+Description: Reference Architecture to host Moodle on AWS - Creates RDS Aurora mysql database cluster
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -52,6 +52,17 @@ Parameters:
     Type: String
   DatabaseInstanceType:
     AllowedValues:
+      - db.t3.micro
+      - db.t3.medium
+      - db.t3.large
+      - db.t3.xlarge
+      - db.t3.2xlarge
+      - db.r5.large
+      - db.r5.xlarge
+      - db.r5.2xlarge
+      - db.r5.4xlarge
+      - db.r5.12xlarge
+      - db.r5.24xlarge
       - db.r4.large
       - db.r4.xlarge
       - db.r4.2xlarge
@@ -149,8 +160,8 @@ Resources:
       BackupRetentionPeriod: 30
       DatabaseName: !Ref DatabaseName
       DBSubnetGroupName: !Ref DataSubnetGroup
-      Engine: aurora-postgresql
-      DBClusterParameterGroupName: default.aurora-postgresql10
+      Engine: aurora-mysql
+      DBClusterParameterGroupName: default.aurora-aurora5.6
       KmsKeyId:
         !If [ UseAWS-ManagedCMK, !Ref 'AWS::NoValue', !Ref DatabaseCmk ]
       MasterUsername: !Ref DatabaseMasterUsername
@@ -171,7 +182,7 @@ Resources:
       DBClusterIdentifier: !Ref DatabaseCluster
       DBInstanceClass: !Ref DatabaseInstanceType
       DBSubnetGroupName: !Ref DataSubnetGroup
-      Engine: aurora-postgresql
+      Engine: aurora-mysql
       Tags:
         - Key: Name
           Value: !Join [ '', [ 'Moodle / ', !Ref 'AWS::StackName' ] ]
@@ -184,7 +195,7 @@ Resources:
       DBClusterIdentifier: !Ref DatabaseCluster
       DBInstanceClass: !Ref DatabaseInstanceType
       DBSubnetGroupName: !Ref DataSubnetGroup
-      Engine: aurora-postgresql
+      Engine: aurora-mysql
       Tags:
         - Key: Name
           Value: !Join [ '', [ 'Moodle / ', !Ref 'AWS::StackName' ] ]
@@ -231,4 +242,6 @@ Outputs:
     Value: !Ref DataSubnetGroup
   DatabaseClusterEndpointAddress:
     Value: !GetAtt DatabaseCluster.Endpoint.Address
+  DatabaseReadEndpointAddress:
+    Value: !GetAtt DatabaseCluster.ReadEndpoint.Address
 
