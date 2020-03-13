@@ -642,7 +642,10 @@ Resources:
               httpd24: []
               mysql-client: []              
               php70: []
-              php70-mysqlnd_ms: []               
+              #php70-mysqlnd_ms: []
+              postgresql93: []
+              php70-pgsql: []
+              mysql-client: []                                          
               php70-gd: []
               php70-soap: []
               php70-intl: []
@@ -752,7 +755,7 @@ Resources:
               content: !Sub |
                 <?php
                 $CFG = new stdClass;
-                $CFG->dbtype = 'mysqli';
+                $CFG->dbtype = 'pgsql'; //mysqli,pgsql
                 $CFG->dblibrary = 'native';
                 $CFG->dbhost = '${DatabaseClusterEndpointAddress}';
                 $CFG->dbname = '${DatabaseName}';

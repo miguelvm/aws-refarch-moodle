@@ -153,21 +153,23 @@ Conditions:
     !Equals ['', !Ref DatabaseCmk]
 
 Resources:
-  DBClusterParameterGroup:
-    Type: 'AWS::RDS::DBClusterParameterGroup'
-    Properties:
-      Description: !Ref 'AWS::StackName'
-      Family: 'aurora-mysql5.7'
-      Parameters: 
-        aurora_lab_mode: 0   
+  # DBClusterParameterGroup:
+  #   Type: 'AWS::RDS::DBClusterParameterGroup'
+  #   Properties:
+  #     Description: !Ref 'AWS::StackName'
+  #     Family: 'aurora-mysql5.7'
+  #     Parameters: 
+  #       aurora_lab_mode: 0   
   DatabaseCluster:
     Type: AWS::RDS::DBCluster
     Properties:
       BackupRetentionPeriod: 30
       DatabaseName: !Ref DatabaseName
       DBSubnetGroupName: !Ref DataSubnetGroup
-      Engine: aurora-mysql      
-      DBClusterParameterGroupName: !Ref DBClusterParameterGroup
+      #Engine: aurora-mysql      
+      #DBClusterParameterGroupName: !Ref DBClusterParameterGroup
+      Engine: aurora-postgresql
+      DBClusterParameterGroupName: default.aurora-postgresql10
       KmsKeyId:
         !If [ UseAWS-ManagedCMK, !Ref 'AWS::NoValue', !Ref DatabaseCmk ]
       MasterUsername: !Ref DatabaseMasterUsername
@@ -188,7 +190,8 @@ Resources:
       DBClusterIdentifier: !Ref DatabaseCluster
       DBInstanceClass: !Ref DatabaseInstanceType
       DBSubnetGroupName: !Ref DataSubnetGroup
-      Engine: aurora-mysql
+      #Engine: aurora-mysql
+      Engine: aurora-postgresql
       Tags:
         - Key: Name
           Value: !Join [ '', [ 'Moodle / ', !Ref 'AWS::StackName' ] ]
@@ -201,7 +204,8 @@ Resources:
       DBClusterIdentifier: !Ref DatabaseCluster
       DBInstanceClass: !Ref DatabaseInstanceType
       DBSubnetGroupName: !Ref DataSubnetGroup
-      Engine: aurora-mysql
+      #Engine: aurora-mysql
+      Engine: aurora-postgresql
       Tags:
         - Key: Name
           Value: !Join [ '', [ 'Moodle / ', !Ref 'AWS::StackName' ] ]
