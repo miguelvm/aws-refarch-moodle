@@ -639,13 +639,11 @@ Resources:
           packages:
             yum:
               awslogs: []
-              httpd24: []
-              mysql-client: []              
+              httpd24: []                         
               php70: []
               #php70-mysqlnd_ms: []
               postgresql93: []
-              php70-pgsql: []
-              mysql-client: []                                          
+              php70-pgsql: []                                                      
               php70-gd: []
               php70-soap: []
               php70-intl: []
@@ -808,7 +806,7 @@ Resources:
                 #!/bin/bash -xe
                 wget -O /tmp/moodle.tgz https://github.com/miguelvm/moodle/releases/download/v3.9dev/moodle-srdjan-catalyst.tgz
                 #git clone -b srdjan-slave-conn https://github.com/srdjan-catalyst/moodle.git /var/www/moodle/html                
-                #tar -xvzf /tmp/moodle.tgz --strip-components=1 -C /var/www/moodle/html/
+                tar -xvzf /tmp/moodle.tgz --strip-components=1 -C /var/www/moodle/html/
                 mv /tmp/config.php /var/www/moodle/html/config.php
                 chown -R root:apache /var/www/moodle/html
                 chown -R apache:apache /var/www/moodle/local
