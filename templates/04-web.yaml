@@ -640,9 +640,9 @@ Resources:
             yum:
               awslogs: []
               httpd24: []
-              postgresql93: []
+              mysql-client: []              
               php70: []
-              php70-pgsql: []
+              php70-mysqlnd_ms: []               
               php70-gd: []
               php70-soap: []
               php70-intl: []
@@ -752,7 +752,7 @@ Resources:
               content: !Sub |
                 <?php
                 $CFG = new stdClass;
-                $CFG->dbtype = 'pgsql';
+                $CFG->dbtype = 'mysqli';
                 $CFG->dblibrary = 'native';
                 $CFG->dbhost = '${DatabaseClusterEndpointAddress}';
                 $CFG->dbname = '${DatabaseName}';
@@ -797,43 +797,14 @@ Resources:
                 require_once(__DIR__ . '/lib/setup.php');
                 // END OF CONFIG //
                 ?>
-
-                <?php                
-                unset($CFG);  // Ignore this line
-                global $CFG;  // This is necessary here for PHPUnit execution
-                $CFG = new stdClass();
-                $CFG->dbtype    = 'mysqli';      // 'pgsql', 'mariadb', 'mysqli', 'sqlsrv' or 'oci'
-                $CFG->dblibrary = 'native';     // 'native' only at the moment
-                $CFG->dbhost = '${DatabaseClusterEndpointAddress}';
-                $CFG->dbname = '${DatabaseName}';
-                $CFG->dbuser = '${DatabaseMasterUsername}';
-                $CFG->dbpass = '${DatabaseMasterPassword}';
-                $CFG->prefix    = 'mdl_';       // prefix to use for all table names
-                $CFG->dboptions = array(
-                    'dbpersist' => false,
-                    'dbsocket'  => false,
-                    'dbport'    => '',
-                    'dbhandlesoptions' => false,
-                    'dbcollation' => 'utf8mb4_unicode_ci',
-                    // 'fetchbuffersize' => 100000,
-                );
-                $CFG->wwwroot = strtolower($hostwithprotocol);                
-                $CFG->dataroot = '/var/www/moodle/data';
-                $CFG->tempdir = '/var/www/moodle/temp';
-                $CFG->cachedir = '/var/www/moodle/cache';
-                $CFG->localcachedir = '/var/www/moodle/local';
-                $CFG->directorypermissions = 02777;
-                $CFG->admin = 'admin';
-                require_once(__DIR__ . '/lib/setup.php'); // Do not edit
               mode: '000755'
               owner: root
               group: root
             /tmp/install_moodle.sh:
               content:  !Sub |
                 #!/bin/bash -xe
-                #wget -O /tmp/moodle.tgz https://download.moodle.org/download.php/stable38/moodle-3.8.1.tgz
-                git clone -b srdjan-slave-conn https://github.com/srdjan-catalyst/moodle.git /var/www/moodle/html
-                #git clone --depth=1 --single-branch --branch srdjan-slave-conn https://github.com/srdjan-catalyst/moodle.git /var/www/moodle/html
+                wget -O /tmp/moodle.tgz https://github.com/miguelvm/moodle/releases/download/v3.9dev/moodle-srdjan-catalyst.tgz
+                #git clone -b srdjan-slave-conn https://github.com/srdjan-catalyst/moodle.git /var/www/moodle/html                
                 #tar -xvzf /tmp/moodle.tgz --strip-components=1 -C /var/www/moodle/html/
                 mv /tmp/config.php /var/www/moodle/html/config.php
                 chown -R root:apache /var/www/moodle/html

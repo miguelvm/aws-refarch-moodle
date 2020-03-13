@@ -153,15 +153,21 @@ Conditions:
     !Equals ['', !Ref DatabaseCmk]
 
 Resources:
-
+  DBClusterParameterGroup:
+    Type: 'AWS::RDS::DBClusterParameterGroup'
+    Properties:
+      Description: !Ref 'AWS::StackName'
+      Family: 'aurora-mysql5.7'
+      Parameters: 
+        aurora_lab_mode: 0   
   DatabaseCluster:
     Type: AWS::RDS::DBCluster
     Properties:
       BackupRetentionPeriod: 30
       DatabaseName: !Ref DatabaseName
       DBSubnetGroupName: !Ref DataSubnetGroup
-      Engine: aurora-mysql
-      DBClusterParameterGroupName: default.aurora-aurora5.6
+      Engine: aurora-mysql      
+      DBClusterParameterGroupName: !Ref DBClusterParameterGroup
       KmsKeyId:
         !If [ UseAWS-ManagedCMK, !Ref 'AWS::NoValue', !Ref DatabaseCmk ]
       MasterUsername: !Ref DatabaseMasterUsername

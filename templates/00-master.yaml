@@ -188,95 +188,9 @@ Metadata:
 Parameters:
   BastionInstanceType:
     AllowedValues:
-    - t2.nano 
-    - t2.micro 
-    - t2.small 
-    - t2.medium 
-    - t2.large 
-    - t2.xlarge 
-    - t2.2xlarge 
-    - m3.medium 
-    - m3.large 
-    - m3.xlarge 
-    - m3.2xlarge 
-    - m4.large 
-    - m4.xlarge 
-    - m4.2xlarge 
-    - m4.4xlarge 
-    - m4.10xlarge 
-    - m4.16xlarge 
-    - m5.large 
-    - m5.xlarge 
-    - m5.2xlarge 
-    - m5.4xlarge 
-    - m5.12xlarge 
-    - m5.24xlarge 
-    - c3.large 
-    - c3.xlarge 
-    - c3.2xlarge 
-    - c3.4xlarge 
-    - c3.8xlarge 
-    - c4.large 
-    - c4.xlarge 
-    - c4.2xlarge 
-    - c4.4xlarge 
-    - c4.8xlarge 
-    - c5.large 
-    - c5.xlarge 
-    - c5.2xlarge 
-    - c5.4xlarge 
-    - c5.9xlarge 
-    - c5.18xlarge
-    - r3.large 
-    - r3.xlarge 
-    - r3.2xlarge 
-    - r3.4xlarge 
-    - r3.8xlarge 
-    - r4.large 
-    - r4.xlarge 
-    - r4.2xlarge 
-    - r4.4xlarge 
-    - r4.8xlarge 
-    - r4.16xlarge 
-    - x1.16xlarge 
-    - x1.32xlarge 
-    - x1e.xlarge 
-    - x1e.2xlarge 
-    - x1e.4xlarge 
-    - x1e.8xlarge 
-    - x1e.16xlarge 
-    - x1e.32xlarge
-    - d2.xlarge 
-    - d2.2xlarge 
-    - d2.4xlarge 
-    - d2.8xlarge 
-    - h1.2xlarge 
-    - h1.4xlarge 
-    - h1.8xlarge 
-    - h1.16xlarge 
-    - i2.xlarge 
-    - i2.2xlarge 
-    - i2.4xlarge 
-    - i2.8xlarge 
-    - i3.large 
-    - i3.xlarge 
-    - i3.2xlarge 
-    - i3.4xlarge 
-    - i3.8xlarge 
-    - i3.16xlarge
-    - f1.2xlarge 
-    - f1.16xlarge 
-    - g2.2xlarge 
-    - g2.8xlarge 
-    - g3.4xlarge 
-    - g3.8xlarge 
-    - g3.16xlarge 
-    - p2.xlarge 
-    - p2.8xlarge 
-    - p2.16xlarge 
-    - p3.2xlarge 
-    - p3.8xlarge 
-    - p3.16xlarge
+      - t2.nano 
+      - t2.micro 
+      - t2.small 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
     Default: t2.nano
     Description: Bastion EC2 instance type.
@@ -307,6 +221,18 @@ Parameters:
       - db.r4.4xlarge
       - db.r4.8xlarge
       - db.r4.16xlarge
+      - db.t3.micro
+      - db.t3.small
+      - db.t3.medium
+      - db.t3.large
+      - db.t3.xlarge
+      - db.t3.2xlarge
+      - db.r5.large
+      - db.r5.xlarge
+      - db.r5.2xlarge
+      - db.r5.4xlarge
+      - db.r5.12xlarge
+      - db.r5.24xlarge
     ConstraintDescription: Must be a valid RDS instance class.
     Default: db.r4.large
     Description: The Amazon RDS database instance class.
@@ -856,7 +782,7 @@ Resources:
           !Ref DataSubnet4Cidr
         DataSubnet5Cidr:
           !Ref DataSubnet5Cidr
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/01-newvpc.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/01-newvpc.yaml
   securitygroups:
     DependsOn: vpc
     Type: AWS::CloudFormation::Stack
@@ -866,7 +792,7 @@ Resources:
           !Ref SshAccessCidr
         Vpc:
           !GetAtt [ vpc, Outputs.Vpc ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/02-securitygroups.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/02-securitygroups.yaml
   bastion:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -882,7 +808,7 @@ Resources:
           !Ref NumberOfAZs
         Subnet:
           !GetAtt [ vpc, Outputs.PublicSubnet ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-bastion.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/03-bastion.yaml
   publicalb:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -898,7 +824,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.PublicAlbSecurityGroup ]
         Vpc:
           !GetAtt [ vpc, Outputs.Vpc ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-publicalb.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/03-publicalb.yaml
   rds:
     DependsOn: [ securitygroups, securitygroups ]
     Type: AWS::CloudFormation::Stack
@@ -922,7 +848,7 @@ Resources:
           !GetAtt [ vpc, Outputs.DataSubnet ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-rds.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/03-rds.yaml
   efsfilesystem:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -946,7 +872,7 @@ Resources:
           !Ref EfsPerformanceMode
         Subnet:
           !GetAtt [ vpc, Outputs.DataSubnet ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-efsfilesystem.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/03-efsfilesystem.yaml
   sessioncache:
     Condition: DeployWithSessionCache
     DependsOn: securitygroups
@@ -963,7 +889,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.ElastiCacheSecurityGroup ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-elasticache.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/03-elasticache.yaml
   applicationcache:
     Condition: DeployApplicationCache
     DependsOn: securitygroups
@@ -980,7 +906,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.ElastiCacheSecurityGroup ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-elasticache.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/03-elasticache.yaml
   webnocache:
     DependsOn: [ publicalb, rds, efsfilesystem ]
     Condition: DeployWithoutSessionCache
@@ -1025,7 +951,7 @@ Resources:
           !Ref MoodleLocale
         ElastiCacheClusterEndpointAddress:
           ''
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/04-web.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/04-web.yaml
   webcached:
     DependsOn: [ publicalb, rds, efsfilesystem, sessioncache ]
     Condition: DeployWithSessionCache
@@ -1070,7 +996,7 @@ Resources:
           !Ref MoodleLocale
         ElastiCacheClusterEndpointAddress:
           !GetAtt sessioncache.Outputs.ElastiCacheClusterEndpointAddress
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/04-web.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/04-web.yaml
   cloudfront:
     Condition: DeployCloudFront
     DependsOn: publicalb    
@@ -1083,7 +1009,7 @@ Resources:
           !GetAtt [ publicalb, Outputs.PublicAlbDnsName ]
         DomainName:
           !Ref DomainName
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/04-cloudfront.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/04-cloudfront.yaml
   route53:
     Condition: DeployRoute53
     DependsOn: publicalb
@@ -1098,7 +1024,7 @@ Resources:
           !Ref HostedZoneName
         DomainName:
           !Ref DomainName
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/05-route53.yaml
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/05-route53.yaml
       
 Outputs:
   DnsName:
