@@ -4,6 +4,7 @@ do
     aws s3 cp templates/$TEMPLATE s3://mb3moodle/templates/$TEMPLATE 
 done
 
+# Creates stack without session caching
 
 aws cloudformation create-stack --stack-name mb3moodle --template-url https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/00-master.yaml --parameters \
                     ParameterKey=DatabaseInstanceType,ParameterValue=db.r5.4xlarge \
@@ -37,4 +38,11 @@ aws cloudformation create-stack --stack-name mb3moodle --template-url https://s3
                     --capabilities CAPABILITY_NAMED_IAM --disable-rollback
 
 
-                    
+# Important: before running the configuration wizard
+# disable opcache in /etc/php-7.2.d/10-opcache.ini:
+#   opcache.enable=0
+#
+# disable reader instance in /var/www/moodle/html/config.php:
+#   //  'readonly' => [
+#   //    'instance' => 'mb3moodle-rds-5nihipy3drzj-databasecluster-k4fbpgme7bec.cluster-ro-c4uvy8r76ryw.eu-west-1.rds.amazonaws.com',
+#   //  ],
