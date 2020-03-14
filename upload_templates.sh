@@ -5,7 +5,7 @@ do
 done
 
 
-aws cloudformation create-stack --stack-name moodlerefarch --template-url https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/00-master.yaml --parameters \
+aws cloudformation create-stack --stack-name mb3moodle --template-url https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/00-master.yaml --parameters \
                     ParameterKey=DatabaseInstanceType,ParameterValue=db.r5.4xlarge \
                     ParameterKey=UseApplicationCacheBoolean,ParameterValue=true \
                     ParameterKey=EfsEncrpytedBoolean,ParameterValue=true \
