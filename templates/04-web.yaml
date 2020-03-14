@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
-Description: Reference Architecture to host Moodle on AWS - Creates Moodle web Auto Scaling group
+Description: MB3 Moodle - Creates Moodle web Auto Scaling group
 
 Metadata:
 
@@ -766,7 +766,9 @@ Resources:
                   'dbport' => '',
                   'dbhandlesoptions' => false,
                   'dbcollation' => 'utf8mb4_unicode_ci',
-                  'instance' => '${DatabaseReadEndpointAddress}',
+                  'readonly' => [
+                    'instance' => '${DatabaseReadEndpointAddress}',
+                  ],
                 );
                 // Hostname definition //
                 $hostname = '${DomainName}';
@@ -812,7 +814,7 @@ Resources:
                 mv /tmp/config.php /var/www/moodle/html/config.php
                 chown -R root:apache /var/www/moodle/html
                 chown -R apache:apache /var/www/moodle/local
-                
+                sed -i 's/upload_max_filesize =.*/upload_max_filesize = 32M/' /etc/php-7.2.ini
               mode: 000500
               owner: root
               group: root

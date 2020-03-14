@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
-Description: Reference Architecture to host Moodle on AWS - Creates bastion (desired:0; min:0; max:1) Auto Scaling group
+Description: MB3 Moodle - Creates bastion (desired:0; min:0; max:1) Auto Scaling group
 
 Metadata:
 

@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
-Description: Reference Architecture to host Moodle on AWS - Creates New VPC
+Description: MB3 Moodle - VPC
 
 Metadata:
 
