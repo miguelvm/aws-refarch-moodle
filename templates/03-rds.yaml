@@ -58,6 +58,18 @@ Parameters:
       - db.r4.4xlarge
       - db.r4.8xlarge
       - db.r4.16xlarge
+      - db.t3.micro
+      - db.t3.small
+      - db.t3.medium
+      - db.t3.large
+      - db.t3.xlarge
+      - db.t3.2xlarge
+      - db.r5.large
+      - db.r5.xlarge
+      - db.r5.2xlarge
+      - db.r5.4xlarge
+      - db.r5.12xlarge
+      - db.r5.24xlarge
     ConstraintDescription: Must be a valid RDS instance class.
     Default: db.r4.large
     Description: The Amazon RDS database instance class.
@@ -231,4 +243,6 @@ Outputs:
     Value: !Ref DataSubnetGroup
   DatabaseClusterEndpointAddress:
     Value: !GetAtt DatabaseCluster.Endpoint.Address
+  DatabaseReadEndpointAddress:
+    Value: !GetAtt DatabaseCluster.ReadEndpoint.Address
 

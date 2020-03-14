@@ -6,7 +6,7 @@ done
 
 
 aws cloudformation create-stack --stack-name moodlerefarch --template-url https://s3-eu-west-1.amazonaws.com/mb3moodle/templates/00-master.yaml --parameters \
-                    ParameterKey=DatabaseInstanceType,ParameterValue=db.r4.4xlarge \
+                    ParameterKey=DatabaseInstanceType,ParameterValue=db.r5.4xlarge \
                     ParameterKey=UseApplicationCacheBoolean,ParameterValue=true \
                     ParameterKey=EfsEncrpytedBoolean,ParameterValue=true \
                     ParameterKey=DomainName,ParameterValue=veiver.com \
@@ -20,7 +20,7 @@ aws cloudformation create-stack --stack-name moodlerefarch --template-url https:
                     ParameterKey=DatabaseMasterUsername,ParameterValue=moodle \
                     ParameterKey=NumberOfAZs,ParameterValue=2 \
                     ParameterKey=UseSessionCacheBoolean,ParameterValue=false \
-                    ParameterKey=WebInstanceType,ParameterValue=t2.2xlarge \
+                    ParameterKey=WebInstanceType,ParameterValue=t3.xlarge \
                     ParameterKey=SessionCacheNodeType,ParameterValue=cache.t2.micro \
                     ParameterKey=DatabaseMasterPassword,ParameterValue=My0wnPr1vat3Pa33w0rd \
                     ParameterKey=DatabaseEncrpytedBoolean,ParameterValue=true \
