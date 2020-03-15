@@ -30,7 +30,7 @@ aws cloudformation create-stack --stack-name moodle34 --template-url https://s3-
                     ParameterKey=DatabaseEncrpytedBoolean,ParameterValue=true \
                     ParameterKey=EfsPerformanceMode,ParameterValue=generalPurpose \
                     ParameterKey=EC2KeyName,ParameterValue=moodle \
-                    ParameterKey=HostedZoneName,ParameterValue=moodle34.veiver.com \
+                    ParameterKey=HostedZoneName,ParameterValue=veiver.com \
                     ParameterKey=AvailabilityZones,ParameterValue=\"eu-west-1a,eu-west-1b\" \
                     ParameterKey=CloudFrontAcmCertificate,ParameterValue=arn:aws:acm:us-east-1:526038215496:certificate/90b2bbdf-0bf7-47c7-94e4-891b032758b7 \
                     ParameterKey=EfsGrowthInstanceType,ParameterValue=r4.large \
