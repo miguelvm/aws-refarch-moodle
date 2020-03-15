@@ -766,9 +766,9 @@ Resources:
                   'dbport' => '',
                   'dbhandlesoptions' => false,
                   'dbcollation' => 'utf8mb4_unicode_ci',
-                  //'readonly' => [
-                  //  'instance' => '${DatabaseReadEndpointAddress}',
-                  //],
+                  'readonly' => [
+                    'instance' => '${DatabaseReadEndpointAddress}',
+                  ],
                 );
                 // Hostname definition //
                 $hostname = '${DomainName}';
@@ -809,8 +809,8 @@ Resources:
               content:  !Sub |
                 #!/bin/bash -xe
                 #wget -O /tmp/moodle.tgz https://download.moodle.org/stable34/moodle-3.4.tgz
-                wget -O /tmp/moodle.tgz https://download.moodle.org/stable38/moodle-3.8.1.tgz
-                #wget -O /tmp/moodle.tgz https://github.com/miguelvm/moodle/releases/download/v3.9dev/moodle-srdjan-catalyst.tgz
+                #wget -O /tmp/moodle.tgz https://download.moodle.org/stable38/moodle-3.8.1.tgz
+                wget -O /tmp/moodle.tgz https://github.com/miguelvm/moodle/releases/download/v3.9dev/moodle-srdjan-catalyst.tgz
                 tar -xvzf /tmp/moodle.tgz --strip-components=1 -C /var/www/moodle/html/
                 mv /tmp/config.php /var/www/moodle/html/config.php
                 chown -R root:apache /var/www/moodle/html
