@@ -46,3 +46,6 @@ aws cloudformation create-stack --stack-name mb3moodle --template-url https://s3
 #   //  'readonly' => [
 #   //    'instance' => 'mb3moodle-rds-5nihipy3drzj-databasecluster-k4fbpgme7bec.cluster-ro-c4uvy8r76ryw.eu-west-1.rds.amazonaws.com',
 #   //  ],
+#
+# make efs great again:
+# sudo nohup dd if=/dev/urandom of=2048gb-b.img bs=1024k count=256000 status=progress &
