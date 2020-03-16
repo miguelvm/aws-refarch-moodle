@@ -10,7 +10,7 @@ aws cloudformation create-stack --stack-name moodle39dev --template-url https://
                     ParameterKey=DatabaseInstanceType,ParameterValue=db.r5.4xlarge \
                     ParameterKey=UseApplicationCacheBoolean,ParameterValue=true \
                     ParameterKey=EfsEncrpytedBoolean,ParameterValue=true \
-                    ParameterKey=DomainName,ParameterValue=$STACK_NAME.veiver.com \
+                    ParameterKey=DomainName,ParameterValue=moodle39dev.veiver.com \
                     ParameterKey=UseCloudFrontBoolean,ParameterValue=true \
                     ParameterKey=DatabaseName,ParameterValue=moodle \
                     ParameterKey=WebAsgMin,ParameterValue=1 \
