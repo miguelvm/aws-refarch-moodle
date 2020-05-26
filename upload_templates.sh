@@ -22,7 +22,7 @@ aws cloudformation create-stack --stack-name moodle39dev --template-url https://
                     ParameterKey=NumberOfAZs,ParameterValue=2 \
                     ParameterKey=UseSessionCacheBoolean,ParameterValue=false \
                     ParameterKey=WebInstanceType,ParameterValue=t3.2xlarge \
-                    ParameterKey=SessionCacheNodeType,ParameterValue=cache.m5.xlarge \
+                    ParameterKey=SessionCacheNodeType,ParameterValue=cache.m5.large \
                     ParameterKey=DatabaseMasterPassword,ParameterValue=My0wnPr1vat3Pa33w0rd \
                     ParameterKey=DatabaseEncrpytedBoolean,ParameterValue=true \
                     ParameterKey=EfsPerformanceMode,ParameterValue=generalPurpose \
